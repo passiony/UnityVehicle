@@ -3,7 +3,7 @@
 /// <summary>
 /// 前车突然减速
 /// </summary>
-public class CarPhysicsControl : MonoBehaviour
+public class PhysicarControl : MonoBehaviour
 {
     private Rigidbody rb;
     

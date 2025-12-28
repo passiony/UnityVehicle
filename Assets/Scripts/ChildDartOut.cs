@@ -44,4 +44,5 @@ public class ChildDartOut : MonoBehaviour
             Debug.Log("小孩窜出！触发危险时刻。");
         }
     }
+    
 }

@@ -3,23 +3,23 @@ using System.Collections;
 using GleyTrafficSystem;
 using UnityEngine;
 
-public class ScenarioTrigger : MonoBehaviour
+public class ChildTrigger : MonoBehaviour
 {
-    public PhysicarControl m_DecCar;
+    public ChildDartOut m_Child;
     public PlayerCar m_PlayerCar;
     private HUDManager m_HUDManager;
-
-    private void Start()
+    
+    void Start()
     {
         m_HUDManager = gameObject.GetComponent<HUDManager>();
     }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         var body = other.GetComponentInParent<Rigidbody>();
         if (body && body.CompareTag("Player"))
         {
-            m_DecCar.StartTrigger();
+            m_Child.StartTrigger();
             m_PlayerCar.GetComponent<PhysicarControl>().enabled = false;
             m_PlayerCar.Drivable = true;
             m_HUDManager.ShowTakeoverRequest();

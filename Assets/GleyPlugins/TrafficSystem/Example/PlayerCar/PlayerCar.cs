@@ -22,6 +22,8 @@ namespace GleyTrafficSystem
         public Transform centerOfMass;
         public float maxMotorTorque;
         public float maxSteeringAngle;
+        public bool Drivable;
+        
         VehicleLightsComponent lightsComponent;
         bool mainLights;
         bool brake;
@@ -61,6 +63,9 @@ namespace GleyTrafficSystem
 
         public void FixedUpdate()
         {
+            if (!Drivable) 
+                return;
+            
             float motor = maxMotorTorque * inputScript.GetVerticalInput();
             float steering = maxSteeringAngle * inputScript.GetHorizontalInput();
 

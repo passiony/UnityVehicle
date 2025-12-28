@@ -1,25 +1,24 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
 {
+    public enum HUDLevel { G1, G2, G3 }
+
     [Header("G1: 基础警报")]
     public GameObject steeringWheelIcon; // 红色方向盘图标
     public AudioSource voiceAlarm;       // “请立即接管”语音
-    private bool isFlashing = false;
+    private bool isFlashing;
 
     [Header("G2: 风险可视化")]
-    public GameObject riskZonePrefab;    // 红色风险区域（带Projector或平面的Prefab）
-    private GameObject activeRiskZone;
+    public GameObject[] activeRiskZones;
 
     [Header("G3: 增强态势理解")]
     public GameObject[] safetyZones;     // 绿色安全区域数组（左、中、右车道）
 
-    public enum HUDLevel { G1, G2, G3 }
     public HUDLevel currentLevel = HUDLevel.G1;
 
-    public void ShowTakeoverRequest(Transform dangerTarget)
+    public void ShowTakeoverRequest()
     {
         // 1. 触发 G1 内容
         ActivateG1();
@@ -27,7 +26,7 @@ public class HUDManager : MonoBehaviour
         // 2. 根据等级触发增强内容
         if (currentLevel == HUDLevel.G2 || currentLevel == HUDLevel.G3)
         {
-            ActivateG2(dangerTarget);
+            ActivateG2();
         }
 
         if (currentLevel == HUDLevel.G3)
@@ -40,8 +39,12 @@ public class HUDManager : MonoBehaviour
     {
         isFlashing = false;
         steeringWheelIcon.SetActive(false);
-        if(activeRiskZone) activeRiskZone.SetActive(false);
-        foreach (var zone in safetyZones) zone.SetActive(false);
+        foreach (var zone in activeRiskZones)
+        {
+            zone.SetActive(false);
+        }
+        foreach (var zone in safetyZones) 
+            zone.SetActive(false);
     }
 
     // G1播放语音
@@ -54,13 +57,12 @@ public class HUDManager : MonoBehaviour
     }
 
     // G2 将红色风险区放置在危险源（前车或行人）位置
-    private void ActivateG2(Transform target)
+    private void ActivateG2()
     {
-        
-        if (activeRiskZone == null) activeRiskZone = Instantiate(riskZonePrefab);
-        activeRiskZone.transform.SetParent(target); // 随目标移动
-        activeRiskZone.transform.localPosition = new Vector3(0, 0.05f, 0); // 贴近地面
-        activeRiskZone.SetActive(true);
+        foreach (var zone in activeRiskZones)
+        {
+            zone.SetActive(true);
+        }
     }
 
     // G3 逻辑：检测车道是否安全。这里简单演示为激活所有预置绿色区域
@@ -76,11 +78,10 @@ public class HUDManager : MonoBehaviour
     // 方向盘图标闪烁协程
     IEnumerator FlashSteeringWheel()
     {
-        Image img = steeringWheelIcon.GetComponent<Image>();
         while (isFlashing)
         {
-            img.enabled = !img.enabled;
-            yield return new WaitForSeconds(0.4f); // 闪烁频率
+            steeringWheelIcon.SetActive(!steeringWheelIcon.activeSelf);
+            yield return new WaitForSeconds(0.5f); // 闪烁频率
         }
     }
 }
