@@ -3,34 +3,26 @@ using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public enum ScenarioType
-    {
-        RearEnd, //纵向追尾
-        DartOut //横向鬼探头
-    }
-    
     public class ScenarioManager : MonoBehaviour
     {
-        public static ScenarioManager Instance;
-
-        public ScenarioType type;
-
-        private void Awake()
+        public GameObject[] simulate1Go;
+        public GameObject[] simulate2Go;
+        
+        private void Start()
         {
-            Instance = this;
-        }
-
-        //开始事故剧情
-        public void StartScenario()
-        {
-            switch (type)
+            if(GameData.simulateIndex == 0)
             {
-                case ScenarioType.RearEnd:
-                    // 1.                             
-                    break;
-                case ScenarioType.DartOut:
-                    // 2.                             
-                    break;
+                foreach(var go in simulate1Go)
+                {
+                    go.SetActive(true);
+                }
+            }
+            else
+            {
+                foreach(var go in simulate2Go)
+                {
+                    go.SetActive(true);
+                }
             }
         }
     }

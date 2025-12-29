@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using GleyTrafficSystem;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ChildTrigger : MonoBehaviour
 {
@@ -23,6 +24,14 @@ public class ChildTrigger : MonoBehaviour
             m_PlayerCar.GetComponent<PhysicarControl>().enabled = false;
             m_PlayerCar.Drivable = true;
             m_HUDManager.ShowTakeoverRequest();
+            
+             StartCoroutine(DelayToLaunch());
         }
+    }
+    
+    IEnumerator DelayToLaunch()
+    {
+        yield return new WaitForSeconds(10f);
+        SceneManager.LoadScene("Launch");
     }
 }
