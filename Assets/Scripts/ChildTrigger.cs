@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ChildTrigger : MonoBehaviour
 {
-    public ChildDartOut m_Child;
+    public ChildDartOut[] m_Child;
     public PlayerCar m_PlayerCar;
     private HUDManager m_HUDManager;
     
@@ -20,7 +20,10 @@ public class ChildTrigger : MonoBehaviour
         var body = other.GetComponentInParent<Rigidbody>();
         if (body && body.CompareTag("Player"))
         {
-            m_Child.StartTrigger();
+            foreach (var child in m_Child)
+            {
+                child.StartTrigger();
+            }
             m_PlayerCar.GetComponent<PhysicarControl>().enabled = false;
             m_PlayerCar.Drivable = true;
             m_HUDManager.ShowTakeoverRequest();

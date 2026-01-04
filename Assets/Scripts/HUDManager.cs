@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using DefaultNamespace;
 using UnityEngine;
 
 public class HUDManager : MonoBehaviour
@@ -17,6 +19,11 @@ public class HUDManager : MonoBehaviour
     public GameObject[] safetyZones;     // 绿色安全区域数组（左、中、右车道）
 
     public HUDLevel currentLevel = HUDLevel.G1;
+
+    private void Start()
+    {
+        currentLevel = (HUDLevel)GameData.hudIndex;
+    }
 
     public void ShowTakeoverRequest()
     {

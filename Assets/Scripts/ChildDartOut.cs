@@ -12,7 +12,7 @@ public class ChildDartOut : MonoBehaviour
     public float runSpeed = 5.0f;     // 小孩跑动速度 (m/s)
     public Vector3 runDirection = Vector3.left; // 窜出的方向（根据你的马路方向设置）
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         // 初始状态下，确保小孩不会因为重力滑走
@@ -33,6 +33,7 @@ public class ChildDartOut : MonoBehaviour
     // 外部调用：开始窜出
     public void StartTrigger()
     {
+        gameObject.SetActive(true);
         if (!isRunning)
         {
             isRunning = true;

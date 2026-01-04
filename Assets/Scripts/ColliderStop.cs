@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class ColliderStop : MonoBehaviour
 {
-    // Start is called before the first frame update
+   public HUDManager carHUD;
+   public HUDManager childHUD;
+
     void Start()
     {
     }
@@ -17,14 +19,17 @@ public class ColliderStop : MonoBehaviour
         if (body && body.CompareTag("Car"))
         {
             gameObject.GetComponent<PhysicarControl>().StartTrigger();
+            carHUD.HideAllHUD();
         }
-
+        
         if (body && body.CompareTag("Child"))
         {
             body.constraints = RigidbodyConstraints.FreezeRotationY;
             body.GetComponent<ChildDartOut>().enabled = false;
             body.AddForce(body.transform.right * 100, ForceMode.Impulse);
             body.GetComponent<Animator>().Play("idle");
+            
+            childHUD.HideAllHUD();
         }
     }
 }

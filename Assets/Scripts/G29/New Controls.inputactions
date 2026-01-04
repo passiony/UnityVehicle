@@ -1,0 +1,74 @@
+{
+    "name": "New Controls",
+    "maps": [
+        {
+            "name": "New action map",
+            "id": "5f79427b-7a14-4f45-9395-372a932b5687",
+            "actions": [
+                {
+                    "name": "Wheel",
+                    "type": "Value",
+                    "id": "0a03b4e6-55a1-487e-b126-4f8d87f78070",
+                    "expectedControlType": "Axis",
+                    "processors": "Normalize",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Stop",
+                    "type": "Value",
+                    "id": "d498eea6-ecd4-4c28-b86b-6a25e8834fa9",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Foward",
+                    "type": "Value",
+                    "id": "7a8c8c4f-bc64-4317-8791-4c1171c654ef",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9e38633e-2b16-4188-824e-95c0177c307c",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Wheel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "671a5402-a45a-4465-9caf-e30b98be85f1",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Stop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0689ac9b-2ff8-4e92-ac71-b8b81925d6c9",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Foward",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
