@@ -13,7 +13,7 @@ public class FadeOut : MonoBehaviour
     private float startAlpha = 0.0f;
 
     // 结束透明度（1 = 完全不透明）
-    private float endAlpha = 0.4f;
+    private float endAlpha = 0.6f;
 
     void Start()
     {

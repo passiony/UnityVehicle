@@ -8,7 +8,10 @@ public class ColliderStop : MonoBehaviour
 {
    public HUDManager carHUD;
    public HUDManager childHUD;
-
+   private AudioSource m_AudioSource;
+   public AudioClip engineClip;
+   public AudioClip impactClip;
+   public AudioClip destroyClip;
     void Start()
     {
     }
