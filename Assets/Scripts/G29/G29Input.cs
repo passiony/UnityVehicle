@@ -1,24 +1,30 @@
+using System;
+using GleyTrafficSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class G29Input : MonoBehaviour
 {
+    PlayerCar playerCar;
+
     // 1. 输入动作引用
     public InputActionProperty steering;
     public InputActionProperty throttle;
     public InputActionProperty brake;
 
     // 2. 输入值缓存（优化性能）
-    [SerializeField]
-    private float _steerVal;
-    [SerializeField]
-    private float _throttleVal;
-    [SerializeField]
-    private float _brakeVal;
+    [SerializeField] private float _steerVal;
+    [SerializeField] private float _throttleVal;
+    [SerializeField] private float _brakeVal;
 
     // 3. 力反馈参数
     [Header("力反馈设置")] [Range(0, 1)] public float roadVibration = 0.5f;
     [Range(0, 1)] public float brakeVibration = 0.7f;
+
+    private void Awake()
+    {
+        playerCar = gameObject.GetComponent<PlayerCar>();
+    }
 
     void OnEnable()
     {
@@ -43,29 +49,15 @@ public class G29Input : MonoBehaviour
     void Update()
     {
         // 6. 应用输入到车辆物理系统
-        ApplySteering(_steerVal);
-        ApplyThrottle(_throttleVal);
-        ApplyBrake(_brakeVal);
-    }
-
-    // 9. 力反馈更新逻辑
-    private void ApplyBrake(float brakeVal)
-    {
-        // 基础路面震动 + 刹车增强震动
-        // float vibration = roadVibration + (brakeVal > 0.1f ? brakeVibration : 0);
-        Debug.Log("Brake:" + brakeVal);
-    }
-
-    // 示例车辆控制方法（需替换为实际物理逻辑）
-    private void ApplySteering(float value)
-    {
-        Debug.Log("Steering:" + value);
-        // transform.Rotate(Vector3.up, value * Time.deltaTime * 100f);
-    }
-
-    private void ApplyThrottle(float value)
-    {
-        Debug.Log("Throttle:" + value);
-        // transform.Translate(Vector3.forward * value * Time.deltaTime * 5f);
+        playerCar.SetSteering(_steerVal * 0.25f);
+        var brake = 1 - _brakeVal;
+        if (brake >= 0.01f)
+        {
+            playerCar.SetMortor(-_brakeVal);
+        }
+        else
+        {
+            playerCar.SetMortor(1 - _throttleVal);
+        }
     }
 }

@@ -1,20 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using GleyTrafficSystem;
 using UnityEngine;
 
 public class ColliderStop : MonoBehaviour
 {
-   public HUDManager carHUD;
-   public HUDManager childHUD;
-   private AudioSource m_AudioSource;
-   public AudioClip engineClip;
-   public AudioClip impactClip;
-   public AudioClip destroyClip;
-    void Start()
-    {
-    }
+    public HUDManager carHUD;
+    public HUDManager childHUD;
+    public AudioSource impactAudio;
 
     private void OnCollisionEnter(Collision other)
     {
@@ -23,15 +14,17 @@ public class ColliderStop : MonoBehaviour
         {
             gameObject.GetComponent<PhysicarControl>().StartTrigger();
             carHUD.HideAllHUD();
+            impactAudio.Play();
         }
-        
+
         if (body && body.CompareTag("Child"))
         {
             body.constraints = RigidbodyConstraints.FreezeRotationY;
             body.GetComponent<ChildDartOut>().enabled = false;
             body.AddForce(body.transform.right * 100, ForceMode.Impulse);
             body.GetComponent<Animator>().Play("idle");
-            
+            impactAudio.Play();
+
             childHUD.HideAllHUD();
         }
     }

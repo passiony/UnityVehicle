@@ -1,10 +1,18 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using System;
+using UnityEngine;
 
 namespace GleyTrafficSystem
 {
     public class UIInput : MonoBehaviour
     {
+        PlayerCar playerCar;
+        
+        private void Start()
+        {
+            playerCar = gameObject.GetComponent<PlayerCar>();
+            Initializ();
+        }
+        
         //Events used for UI buttons only on mobile device
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
 
@@ -117,6 +125,9 @@ namespace GleyTrafficSystem
 #else
             horizontalInput = Input.GetAxis("Horizontal");
             verticalInput = Input.GetAxis("Vertical");
+            
+            playerCar?.SetSteering(horizontalInput);
+            playerCar?.SetMortor(verticalInput);
 #endif
         }
 

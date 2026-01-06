@@ -14,6 +14,8 @@ public class PhysicarControl : MonoBehaviour
     private float currentTargetSpeedMps; // 目标速度 (m/s)
     private bool isBraking = false;
 
+    public AudioSource brakeSound;
+    
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -62,6 +64,8 @@ public class PhysicarControl : MonoBehaviour
         else
         {
             rb.velocity = Vector3.zero;
+            isBraking = false;
+            brakeSound.Stop();
         }
     }
 
@@ -69,5 +73,7 @@ public class PhysicarControl : MonoBehaviour
     public void StartTrigger()
     {
         isBraking = true;
+        brakeSound.loop = true;
+        brakeSound.Play();
     }
 }

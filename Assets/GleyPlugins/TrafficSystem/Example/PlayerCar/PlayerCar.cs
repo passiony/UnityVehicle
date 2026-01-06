@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Events;
+
 namespace GleyTrafficSystem
 {
     /// <summary>
@@ -32,11 +34,15 @@ namespace GleyTrafficSystem
         bool blinkRifgt;
         Rigidbody rb;
 
-        UIInput inputScript;
+        private float m_Steering;
+        private float m_Motor;
+        
+        public UnityEvent onBrakeStart;
+        public UnityEvent onBrakeEnd;
+        
         private void Start()
         {
             GetComponent<Rigidbody>().centerOfMass = centerOfMass.localPosition;
-            inputScript = gameObject.AddComponent<UIInput>().Initializ();
             lightsComponent = gameObject.GetComponent<VehicleLightsComponent>();
             lightsComponent.Initialize();
             rb = GetComponent<Rigidbody>();
@@ -61,13 +67,34 @@ namespace GleyTrafficSystem
             visualWheel.transform.rotation = rotation;
         }
 
+        public void SetSteering(float steering)
+        {
+            m_Steering = steering;
+        }
+
+        private bool isBraking;
+        public void SetMortor(float motor)
+        {
+            m_Motor = motor;
+            if (motor < -0.01f && !isBraking)
+            {
+                isBraking = true;
+                onBrakeStart?.Invoke();
+            }
+            else if (isBraking)
+            {
+                isBraking = false;
+                onBrakeEnd?.Invoke();
+            }
+        }
+        
         public void FixedUpdate()
         {
             if (!Drivable) 
                 return;
             
-            float motor = maxMotorTorque * inputScript.GetVerticalInput();
-            float steering = maxSteeringAngle * inputScript.GetHorizontalInput();
+            float motor = maxMotorTorque * m_Motor;
+            float steering = maxSteeringAngle * m_Steering;
 
             float localVelocity = transform.InverseTransformDirection(rb.velocity).z+0.1f;
             reverse = false;
