@@ -3,16 +3,23 @@ using System.Collections;
 using GleyTrafficSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class ScenarioTrigger : MonoBehaviour
 {
     public PhysicarControl m_DecCar;
     public PlayerCar m_PlayerCar;
     private HUDManager m_HUDManager;
+    public PhysicarControl[] m_SideCars;
 
     private void Start()
     {
+        m_DecCar.gameObject.SetActive(true);
         m_HUDManager = gameObject.GetComponent<HUDManager>();
+        foreach (var sideCar in m_SideCars)
+        {
+            sideCar.gameObject.SetActive(Random.value > 0.5f);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

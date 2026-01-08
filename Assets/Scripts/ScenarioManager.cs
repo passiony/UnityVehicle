@@ -6,8 +6,8 @@ namespace DefaultNamespace
     public class ScenarioManager : MonoBehaviour
     {
         public bool DebugMode = true;
-        public HUDManager.HUDLevel hudIndex;
-        public int simulateIndex = 1;
+        public HUDLevel hudIndex;
+        public SimulateLevel simulateIndex;
         public GameObject[] simulate1Go;
         public GameObject[] simulate2Go;
 
@@ -15,7 +15,7 @@ namespace DefaultNamespace
         {
             if (DebugMode)
             {
-                GameData.simulateIndex = simulateIndex;
+                GameData.simulateIndex = (int)simulateIndex;
                 GameData.hudIndex = (int)hudIndex;
             }
         }

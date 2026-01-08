@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// 小孩突然窜出
@@ -6,6 +8,7 @@
 public class ChildDartOut : MonoBehaviour
 {
     private Rigidbody rb;
+    [SerializeField]
     private bool isRunning = false;
 
     [Header("设置")]
@@ -17,6 +20,11 @@ public class ChildDartOut : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         // 初始状态下，确保小孩不会因为重力滑走
         rb.isKinematic = true; 
+    }
+
+    private void OnEnable()
+    {
+        runSpeed = Random.Range(3, 8);
     }
 
     void FixedUpdate()

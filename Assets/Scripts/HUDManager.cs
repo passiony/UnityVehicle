@@ -3,10 +3,11 @@ using System.Collections;
 using DefaultNamespace;
 using UnityEngine;
 
+public enum HUDLevel { G1, G2, G3 }
+public enum SimulateLevel { S1, S2}
+
 public class HUDManager : MonoBehaviour
 {
-    public enum HUDLevel { G1, G2, G3 }
-
     [Header("G1: 基础警报")]
     public GameObject steeringWheelIcon; // 红色方向盘图标
     public AudioSource voiceAlarm;       // “请立即接管”语音

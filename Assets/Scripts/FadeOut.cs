@@ -18,7 +18,7 @@ public class FadeOut : MonoBehaviour
     void Start()
     {
         // 获取目标材质（假设是渲染器的第一个材质）
-        Renderer renderer = GetComponent<Renderer>();
+        Renderer renderer = GetComponentInChildren<Renderer>();
         targetMaterial = renderer.material;
         Color currentColor = targetMaterial.color;
         currentColor.a = startAlpha;

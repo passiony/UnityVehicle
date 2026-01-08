@@ -6,8 +6,9 @@
 public class PhysicarControl : MonoBehaviour
 {
     private Rigidbody rb;
-    
-    [Header("实验设置")]
+
+    [Header("实验设置")] 
+    public bool randomSpeed;
     public float initialSpeedKmh = 60f; // 初始速度 (km/h)
     public float targetDeceleration = 6.0f; // 减速度 (m/s^2)
 
@@ -15,10 +16,16 @@ public class PhysicarControl : MonoBehaviour
     private bool isBraking = false;
 
     public AudioSource brakeSound;
+    public MeshRenderer[] backLights;
     
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        if (randomSpeed)
+        {
+            initialSpeedKmh = Random.Range(40f, 80f);
+        }
         
         // 1. 将 km/h 转换为 m/s (公式：除以 3.6)
         currentTargetSpeedMps = initialSpeedKmh / 3.6f;
@@ -64,7 +71,6 @@ public class PhysicarControl : MonoBehaviour
         else
         {
             rb.velocity = Vector3.zero;
-            isBraking = false;
             brakeSound.Stop();
         }
     }
@@ -75,5 +81,9 @@ public class PhysicarControl : MonoBehaviour
         isBraking = true;
         brakeSound.loop = true;
         brakeSound.Play();
+        foreach (var light in backLights)
+        {
+            light.materials[1].EnableKeyword("_EMISSION");
+        }
     }
 }

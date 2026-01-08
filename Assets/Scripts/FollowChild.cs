@@ -1,34 +1,37 @@
+using System;
 using UnityEngine;
 
 public class FollowChild : MonoBehaviour
 {
     // 目标物体的Transform组件
-    public Transform target;
-    
-    // 存储初始相对位置偏移
-    private Vector3 initialPositionOffset;
+    public Transform player;
+    public Transform roadCenter;
 
-    void Start()
+    private GameObject mesh;
+    // 存储初始相对位置偏移
+    public Vector3 Offset;
+
+    private void Awake()
     {
-        if (target != null)
-        {
-            // 计算并存储初始相对位置偏移
-            initialPositionOffset = transform.position - target.position;
-        }
-        else
-        {
-            Debug.LogWarning("Target not assigned to FollowChild script on " + gameObject.name);
-        }
+        mesh = transform.GetChild(0).gameObject;
     }
 
+    public void SetTarget(Transform target)
+    {
+        player = target;
+    }
+    
     void LateUpdate()
     {
-        if (target != null)
+        if (player != null)
         {
             // 更新位置：目标位置 + 初始相对位置偏移
-            var targetPos = target.position + initialPositionOffset;
+            var targetPos = player.position + Offset;
             targetPos.y = transform.position.y;
             transform.position = targetPos;
         }
+        var offset  = roadCenter.position - player.position;
+        offset.z = 0;
+        mesh.SetActive(offset.magnitude <= 8);
     }
 }
