@@ -316388,6 +316388,10 @@ PrefabInstance:
       propertyPath: childHUD
       value: 
       objectReference: {fileID: 1085086117}
+    - target: {fileID: 7477859276169573331, guid: 3695e6023181f4e46a44d9825020e5aa, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8945865921099342996, guid: 3695e6023181f4e46a44d9825020e5aa, type: 3}
       propertyPath: m_Name
       value: Player
@@ -316399,8 +316403,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8945865921099342996, guid: 3695e6023181f4e46a44d9825020e5aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4614919446260741861}
   m_SourcePrefab: {fileID: 100100000, guid: 3695e6023181f4e46a44d9825020e5aa, type: 3}
+--- !u!1 &1597370815608564006 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8945865921099342996, guid: 3695e6023181f4e46a44d9825020e5aa, type: 3}
+  m_PrefabInstance: {fileID: 1597370815608564005}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1597524424492989701
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -380743,10 +380755,22 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5163894267278327392, guid: 3695e6023181f4e46a44d9825020e5aa, type: 3}
   m_PrefabInstance: {fileID: 1597370815608564005}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1597370815608564006}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c91495b9383c074489761fcc20ee3ab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4614919446260741861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597370815608564006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c2f423d82fd6c94391325ee6cd70b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4621319063146099268
