@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Vertical
 {
-    public class ScenarioManager : MonoBehaviour
+    public class GameManager : MonoBehaviour
     {
         public bool DebugMode = true;
         public HUDLevel hudIndex;
@@ -15,14 +15,14 @@ namespace DefaultNamespace
         {
             if (DebugMode)
             {
-                GameData.simulateIndex = (int)simulateIndex;
-                GameData.hudIndex = (int)hudIndex;
+                GlobalData.simulateIndex = (int)simulateIndex;
+                GlobalData.hudIndex = (int)hudIndex;
             }
         }
 
         private void Start()
         {
-            if (GameData.simulateIndex == 0)
+            if (GlobalData.simulateIndex == 0)
             {
                 foreach (var go in simulate1Go)
                 {

@@ -1,6 +1,6 @@
-﻿namespace DefaultNamespace
+﻿namespace Vertical
 {
-    public static class GameData
+    public static class GlobalData
     {
         public static int hudIndex;
         public static int simulateIndex;

@@ -32,6 +32,6 @@ public class FollowChild : MonoBehaviour
         }
         var offset  = roadCenter.position - player.position;
         offset.z = 0;
-        mesh.SetActive(offset.magnitude <= 8);
+        mesh.SetActive(offset.magnitude <= 10);
     }
 }

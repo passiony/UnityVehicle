@@ -3,7 +3,7 @@
 /// <summary>
 /// 前车突然减速
 /// </summary>
-public class PhysicarControl : MonoBehaviour
+public class AutoCar : MonoBehaviour
 {
     private Rigidbody rb;
 
@@ -24,7 +24,7 @@ public class PhysicarControl : MonoBehaviour
 
         if (randomSpeed)
         {
-            initialSpeedKmh = Random.Range(40f, 80f);
+            initialSpeedKmh = Random.Range(55f, 65f);
         }
         
         // 1. 将 km/h 转换为 m/s (公式：除以 3.6)

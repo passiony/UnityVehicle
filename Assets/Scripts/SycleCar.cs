@@ -8,7 +8,7 @@ public class SycleCar : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        var car = other.GetComponentInParent<PhysicarControl>();
+        var car = other.GetComponentInParent<AutoCar>();
         if (car)
         {
             car.transform.position = syclePoint.position;

@@ -1,31 +1,34 @@
 using System;
 using UnityEngine;
 
-public class ColliderStop : MonoBehaviour
+namespace Vertical
 {
-    public HUDManager carHUD;
-    public HUDManager childHUD;
-    public AudioSource impactAudio;
-
-    private void OnCollisionEnter(Collision other)
+    public class ColliderStop : MonoBehaviour
     {
-        var body = other.gameObject.GetComponentInParent<Rigidbody>();
-        if (body && body.CompareTag("Car"))
-        {
-            gameObject.GetComponent<PhysicarControl>().StartTrigger();
-            carHUD.HideAllHUD();
-            impactAudio.Play();
-        }
+        public HUDManager carHUD;
+        public HUDManager childHUD;
+        public AudioSource impactAudio;
 
-        if (body && body.CompareTag("Child"))
+        private void OnCollisionEnter(Collision other)
         {
-            body.constraints = RigidbodyConstraints.FreezeRotationY;
-            body.GetComponent<ChildDartOut>().enabled = false;
-            body.AddForce(body.transform.right * 100, ForceMode.Impulse);
-            body.GetComponent<Animator>().Play("idle");
-            impactAudio.Play();
+            var body = other.gameObject.GetComponentInParent<Rigidbody>();
+            if (body && body.CompareTag("Car"))
+            {
+                gameObject.GetComponent<AutoCar>().StartTrigger();
+                carHUD.HideAllHUD();
+                impactAudio.Play();
+            }
 
-            childHUD.HideAllHUD();
+            if (body && body.CompareTag("Child"))
+            {
+                body.constraints = RigidbodyConstraints.FreezeRotationY;
+                body.GetComponent<ChildDartOut>().enabled = false;
+                body.AddForce(body.transform.right * 100, ForceMode.Impulse);
+                body.GetComponent<Animator>().Play("idle");
+                impactAudio.Play();
+
+                childHUD.HideAllHUD();
+            }
         }
     }
 }

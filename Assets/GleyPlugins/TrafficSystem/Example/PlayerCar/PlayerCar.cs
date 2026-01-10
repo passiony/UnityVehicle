@@ -25,7 +25,7 @@ namespace GleyTrafficSystem
         public float maxMotorTorque;
         public float maxSteeringAngle;
         public bool Drivable;
-        
+
         VehicleLightsComponent lightsComponent;
         bool mainLights;
         bool brake;
@@ -36,10 +36,13 @@ namespace GleyTrafficSystem
 
         private float m_Steering;
         private float m_Motor;
-        
+
+        public float Steering => m_Steering;
+        public float Motor => m_Motor;
+
         public UnityEvent onBrakeStart;
         public UnityEvent onBrakeEnd;
-        
+
         private void Start()
         {
             GetComponent<Rigidbody>().centerOfMass = centerOfMass.localPosition;
@@ -73,6 +76,7 @@ namespace GleyTrafficSystem
         }
 
         private bool isBraking;
+
         public void SetMortor(float motor)
         {
             m_Motor = motor;
@@ -87,16 +91,16 @@ namespace GleyTrafficSystem
                 onBrakeEnd?.Invoke();
             }
         }
-        
+
         public void FixedUpdate()
         {
-            if (!Drivable) 
+            if (!Drivable)
                 return;
-            
+
             float motor = maxMotorTorque * m_Motor;
             float steering = maxSteeringAngle * m_Steering;
 
-            float localVelocity = transform.InverseTransformDirection(rb.velocity).z+0.1f;
+            float localVelocity = transform.InverseTransformDirection(rb.velocity).z + 0.1f;
             reverse = false;
             brake = false;
             if (localVelocity < 0)
@@ -129,11 +133,13 @@ namespace GleyTrafficSystem
                     axleInfo.leftWheel.steerAngle = steering;
                     axleInfo.rightWheel.steerAngle = steering;
                 }
+
                 if (axleInfo.motor)
                 {
                     axleInfo.leftWheel.motorTorque = motor;
                     axleInfo.rightWheel.motorTorque = motor;
                 }
+
                 ApplyLocalPositionToVisuals(axleInfo.leftWheel);
                 ApplyLocalPositionToVisuals(axleInfo.rightWheel);
             }

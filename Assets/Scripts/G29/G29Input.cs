@@ -17,6 +17,10 @@ public class G29Input : MonoBehaviour
     [SerializeField] private float _throttleVal;
     [SerializeField] private float _brakeVal;
 
+    public float SteerVal => _steerVal;
+    public float ThrottleVal => _throttleVal;
+    public float BrakeVal => _brakeVal;
+    
     // 3. 力反馈参数
     [Header("力反馈设置")] [Range(0, 1)] public float roadVibration = 0.5f;
     [Range(0, 1)] public float brakeVibration = 0.7f;

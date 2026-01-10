@@ -1,31 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
-using DefaultNamespace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Launch : MonoBehaviour
+namespace Vertical
 {
-    public TMP_Dropdown hudDropdown;
-    public TMP_Dropdown simulateDropdown;
-
-    public Button startBtn;
-
-    void Start()
+    public class Launch : MonoBehaviour
     {
-        startBtn.onClick.AddListener(OnStartClick);
-    }
+        public TMP_Dropdown hudDropdown;
+        public TMP_Dropdown simulateDropdown;
 
-    private void OnStartClick()
-    {
-        var hudIndex = hudDropdown.value;
-        var simulateIndex = simulateDropdown.value;
-        GameData.hudIndex = hudIndex;
-        GameData.simulateIndex = simulateIndex;
-        
-        SceneManager.LoadScene("SampleScene");
-    }
+        public Button startBtn;
 
+        void Start()
+        {
+            startBtn.onClick.AddListener(OnStartClick);
+        }
+
+        private void OnStartClick()
+        {
+            var hudIndex = hudDropdown.value;
+            var simulateIndex = simulateDropdown.value;
+            GlobalData.hudIndex = hudIndex;
+            GlobalData.simulateIndex = simulateIndex;
+
+            SceneManager.LoadScene("SampleScene");
+        }
+    }
 }
