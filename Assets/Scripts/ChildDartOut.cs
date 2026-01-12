@@ -13,6 +13,8 @@ public class ChildDartOut : MonoBehaviour
 
     [Header("设置")]
     public float runSpeed = 5.0f;     // 小孩跑动速度 (m/s)
+    public float MaxSpeed = 6.0f;     // 小孩跑动速度 (m/s)
+    public float MinSpeed = 4.0f;     // 小孩跑动速度 (m/s)
     public Vector3 runDirection = Vector3.left; // 窜出的方向（根据你的马路方向设置）
 
     void Awake()
@@ -24,7 +26,7 @@ public class ChildDartOut : MonoBehaviour
 
     private void OnEnable()
     {
-        runSpeed = Random.Range(3, 8);
+        runSpeed = Random.Range(MinSpeed, MaxSpeed);
     }
 
     void FixedUpdate()

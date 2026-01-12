@@ -20,10 +20,6 @@ public class G29Input : MonoBehaviour
     public float SteerVal => _steerVal;
     public float ThrottleVal => _throttleVal;
     public float BrakeVal => _brakeVal;
-    
-    // 3. 力反馈参数
-    [Header("力反馈设置")] [Range(0, 1)] public float roadVibration = 0.5f;
-    [Range(0, 1)] public float brakeVibration = 0.7f;
 
     private void Awake()
     {
@@ -53,15 +49,14 @@ public class G29Input : MonoBehaviour
     void Update()
     {
         // 6. 应用输入到车辆物理系统
-        playerCar.SetSteering(_steerVal * 0.25f);
-        var brake = 1 - _brakeVal;
-        if (brake >= 0.01f)
+        playerCar.SetSteering(_steerVal);
+        if (_brakeVal < 0)
         {
-            playerCar.SetMortor(-_brakeVal);
+            playerCar.SetMortor((_brakeVal - 1) * 0.5f);
         }
         else
         {
-            playerCar.SetMortor(1 - _throttleVal);
+            playerCar.SetMortor((1 - _throttleVal) * 0.5f);
         }
     }
 }

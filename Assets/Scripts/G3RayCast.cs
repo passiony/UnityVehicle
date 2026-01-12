@@ -32,34 +32,46 @@ public class G3RayCast : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 计算射线的起始位置
-        Vector3 rayOrigin = transform.position + transform.TransformDirection(rayOriginOffset);
+        bool hasCollision = false;
+        var scale = transform.parent.localScale.x;
+        for (int i = 0; i < (int)scale; i+=2)
+        {
+            var offset = rayOriginOffset + new Vector3(i, 0, 0);
+            // 计算射线的起始位置
+            Vector3 rayOrigin = transform.parent.position + transform.TransformDirection(offset);
 
-        // 计算射线的方向（物体的前方）
-        Vector3 rayDirection = transform.forward;
+            // 计算射线的方向（物体的前方）
+            Vector3 rayDirection = transform.forward;
 
-        // 存储碰撞信息
-        RaycastHit hitInfo;
+            // 存储碰撞信息
+            RaycastHit hitInfo;
 
-        int layermask = LayerMask.GetMask("Vehicles");
-        // 发射射线
-        bool hasCollision = Physics.Raycast(rayOrigin, rayDirection, out hitInfo, detectionRange, layermask);
+            int layermask = LayerMask.GetMask("Vehicles");
+            // 发射射线
+            hasCollision = Physics.Raycast(rayOrigin, rayDirection, out hitInfo, detectionRange, layermask);
 
-        // 在Scene视图中绘制射线，用于调试
-        Debug.DrawRay(rayOrigin, rayDirection * detectionRange, rayColor);
+            // 在Scene视图中绘制射线，用于调试
+            Debug.DrawRay(rayOrigin, rayDirection * detectionRange, rayColor);
+
+            if (hasCollision)
+            {
+                Debug.Log("检测到碰撞，碰撞物体: " + hitInfo.collider.gameObject.name);
+                break;
+            }
+        }
 
         // 根据检测结果控制mesh的显示和隐藏
         if (meshRenderer != null)
         {
             meshRenderer.enabled = !hasCollision;
+            if (meshRenderer.enabled)
+            {
+                this.GetComponent<FadeOut>()?.StartFadeIn();
+            }
         }
 
         // 打印调试信息
-        if (hasCollision)
-        {
-            Debug.Log("检测到碰撞，碰撞物体: " + hitInfo.collider.gameObject.name);
-        }
-        else
+        if (!hasCollision)
         {
             Debug.Log("未检测到碰撞");
         }

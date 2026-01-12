@@ -36,6 +36,13 @@ namespace Vertical
                     go.SetActive(true);
                 }
             }
+
+            DataCenter.Instance.StartSampling();
+        }
+
+        private void OnDisable()
+        {
+            DataCenter.Instance.StopSampling();
         }
     }
 }

@@ -24,7 +24,8 @@ namespace Vertical
             var random = Random.Range(0, m_Childs.Length);
             m_TargetChild = m_Childs[random];
             m_TargetChild.gameObject.SetActive(true);
-            m_FollowChild.SetTarget(m_TargetChild.transform);
+
+            m_FollowChild.SetTarget(m_TargetChild.transform, random);
             foreach (var safe in m_SafetyArea)
             {
                 safe.SetTarget(m_TargetChild.transform);

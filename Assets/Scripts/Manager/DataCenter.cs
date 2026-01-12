@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using GleyTrafficSystem;
 using UnityEngine;
 
@@ -338,17 +341,23 @@ namespace Vertical
             }
 
             // 输出统计结果
-            Debug.Log("===== 数据统计结果 =====");
-            Debug.Log($"平均车道偏移: {averageLaneOffset:F2} 米");
-            Debug.Log($"车道偏移标准差: {laneOffsetStdDev:F2} 米");
-            Debug.Log($"方向盘转角标准差: {steeringAngleStdDev:F2} 度");
-            Debug.Log($"平均速度: {averageSpeed:F2} 米/秒");
-            Debug.Log($"速度标准差: {speedStdDev:F2} 米/秒");
-            Debug.Log($"油门踏板位置标准差: {throttlePositionStdDev:F2}");
-            Debug.Log($"方向盘操作反应时间: {steeringReactionTime:F2} 秒");
-            Debug.Log($"刹车反应时间: {brakeReactionTime:F2} 秒");
-            Debug.Log($"最小TTC: {minTTC:F2} 秒");
-            Debug.Log("=======================");
+            var sb = new StringBuilder();
+            sb.AppendLine("===== 数据统计结果 =====");
+            sb.AppendLine($"平均车道偏移: {averageLaneOffset:F2} 米");
+            sb.AppendLine($"车道偏移标准差: {laneOffsetStdDev:F2} 米");
+            sb.AppendLine($"方向盘转角标准差: {steeringAngleStdDev:F2} 度");
+            sb.AppendLine($"平均速度: {averageSpeed:F2} 米/秒");
+            sb.AppendLine($"速度标准差: {speedStdDev:F2} 米/秒");
+            sb.AppendLine($"油门踏板位置标准差: {throttlePositionStdDev:F2}");
+            sb.AppendLine($"方向盘操作反应时间: {steeringReactionTime:F2} 秒");
+            sb.AppendLine($"刹车反应时间: {brakeReactionTime:F2} 秒");
+            sb.AppendLine($"最小TTC: {minTTC:F2} 秒");
+            sb.AppendLine("=======================");
+
+            //保存到本地
+            var savepath = Directory.GetCurrentDirectory() + $"/DataCenter{DateTime.Now:yyyyMMddHHmmss}.txt";
+            Debug.Log($"数据已保存到: {savepath}");
+            FileUtility.SafeWriteAllText(savepath, sb.ToString());
         }
 
         /// <summary>

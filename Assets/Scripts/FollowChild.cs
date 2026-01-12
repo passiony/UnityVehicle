@@ -16,9 +16,17 @@ public class FollowChild : MonoBehaviour
         mesh = transform.GetChild(0).gameObject;
     }
 
-    public void SetTarget(Transform target)
+    public void SetTarget(Transform target,int index)
     {
         player = target;
+        if (index == 0)
+        {
+            Offset.x = 1;
+        }
+        if (index == 1)
+        {
+            Offset.x = -1;
+        }
     }
     
     void LateUpdate()
@@ -30,8 +38,8 @@ public class FollowChild : MonoBehaviour
             targetPos.y = transform.position.y;
             transform.position = targetPos;
         }
-        var offset  = roadCenter.position - player.position;
-        offset.z = 0;
-        mesh.SetActive(offset.magnitude <= 10);
+        // var offset  = roadCenter.position - player.position;
+        // offset.z = 0;
+        // mesh.SetActive(offset.magnitude <= 10);
     }
 }

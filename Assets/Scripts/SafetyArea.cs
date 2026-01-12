@@ -8,16 +8,21 @@ public class SafetyArea : MonoBehaviour
     public Transform player;
     private GameObject plane;
 
-    public float reminingWidth = 3;
+    public float reminingWidth = 2;
 
     void Start()
     {
         plane = transform.GetChild(0).gameObject;
     }
 
+    private void OnEnable()
+    {
+        SetTarget(player);
+    }
+
     public void SetTarget(Transform target)
     {
-        player = target;
+        // player = target;
         var pos = transform.position;
         pos.z = player.position.z;
         transform.position = pos;
@@ -31,7 +36,8 @@ public class SafetyArea : MonoBehaviour
         var sign = Mathf.Sign(Vector3.Dot(transform.right, offset));
         var distance = offset.magnitude - reminingWidth;
 
-        plane.SetActive(distance is > 3 and < 15 && sign > 0);
+        plane.SetActive(distance > 3 && sign > 0);
+        distance = Mathf.Clamp(distance, 0, 16);
         transform.localScale = new Vector3(distance * sign, 1, 1);
     }
 }
