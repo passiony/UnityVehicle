@@ -238460,7 +238460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82a98ffc75f545009b1a0241e8388a9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugMode: 1
+  DebugMode: 0
   hudIndex: 2
   simulateIndex: 0
   simulate1Go:

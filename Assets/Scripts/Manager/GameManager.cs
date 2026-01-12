@@ -13,11 +13,13 @@ namespace Vertical
 
         private void Awake()
         {
+#if UNITY_EDITOR
             if (DebugMode)
             {
                 GlobalData.simulateIndex = (int)simulateIndex;
                 GlobalData.hudIndex = (int)hudIndex;
             }
+#endif
         }
 
         private void Start()
