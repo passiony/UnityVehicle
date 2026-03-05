@@ -286,7 +286,7 @@ namespace Vertical
         /// </summary>
         private float GetCurrentSteeringAngle()
         {
-            return g29Input.SteerVal;
+            return g29Input.SteerVal * playerCar.maxSteeringAngle;
         }
 
         /// <summary>
@@ -337,8 +337,11 @@ namespace Vertical
 
                 // 计算最小TTC
                 latestEvent.minTTC = CalculateMinTTC(latestEvent);
-                minTTC = latestEvent.minTTC;
+
+                // 处理无穷大值
+                minTTC = float.IsInfinity(latestEvent.minTTC) ? 0 : latestEvent.minTTC;
             }
+
 
             // 输出统计结果
             var sb = new StringBuilder();
@@ -382,7 +385,7 @@ namespace Vertical
 
             // 确保有足够的数据
             if (riskEvent.egoVehicleData.Count < 2 || riskEvent.leadVehicleData.Count < 2)
-                return float.MaxValue;
+                return float.PositiveInfinity;
 
             // 计算每个时间点的TTC
             for (int i = 0; i < riskEvent.egoVehicleData.Count; i++)
@@ -394,22 +397,23 @@ namespace Vertical
                 VehicleDataPoint egoData = riskEvent.egoVehicleData[i];
                 VehicleDataPoint leadData = riskEvent.leadVehicleData[i];
 
-                // 计算相对距离
-                float relativeDistance = leadData.position.z - egoData.position.z;
+                // 计算相对距离（考虑坐标系可能的差异）
+                float relativeDistance = Mathf.Abs(leadData.position.z - egoData.position.z);
 
                 // 计算相对速度
                 float relativeSpeed = egoData.speed - leadData.speed;
 
-                // 只有当相对速度大于0时，TTC才有意义
-                if (relativeSpeed > 0 && relativeDistance > 0)
+                // 只有当相对速度大于0且相对距离大于0时，TTC才有意义
+                // 添加阈值检查，避免除以非常小的数
+                if (relativeSpeed > 0.1f && relativeDistance > 0.1f)
                 {
                     float ttc = relativeDistance / relativeSpeed;
                     ttcList.Add(ttc);
                 }
             }
 
-            // 返回最小TTC，如果没有有效TTC则返回最大值
-            return ttcList.Count > 0 ? ttcList.Min() : float.MaxValue;
+            // 返回最小TTC，如果没有有效TTC则返回正无穷大
+            return ttcList.Count > 0 ? ttcList.Min() : float.PositiveInfinity;
         }
 
         /// <summary>

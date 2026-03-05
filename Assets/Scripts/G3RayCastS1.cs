@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class G3RayCast : MonoBehaviour
+public class G3RayCastS1 : MonoBehaviour
 {
     // 检测范围，默认为50米
     public float detectionRange = 50f;
@@ -16,7 +16,6 @@ public class G3RayCast : MonoBehaviour
     // 用于调试的射线颜色
     public Color rayColor = Color.red;
 
-    // Start is called before the first frame update
     void Start()
     {
         // 获取物体的MeshRenderer组件
@@ -33,31 +32,27 @@ public class G3RayCast : MonoBehaviour
     void Update()
     {
         bool hasCollision = false;
-        var scale = transform.parent.localScale.x;
-        for (int i = 0; i < (int)scale; i+=2)
+        var offset = rayOriginOffset;
+        
+        // 计算射线的起始位置
+        Vector3 rayOrigin = transform.position + transform.TransformDirection(offset);
+
+        // 计算射线的方向（物体的前方）
+        Vector3 rayDirection = transform.forward;
+
+        // 存储碰撞信息
+        RaycastHit hitInfo;
+
+        int layermask = LayerMask.GetMask("Vehicles");
+        // 发射射线
+        hasCollision = Physics.Raycast(rayOrigin, rayDirection, out hitInfo, detectionRange, layermask);
+
+        // 在Scene视图中绘制射线，用于调试
+        Debug.DrawRay(rayOrigin, rayDirection * detectionRange, rayColor);
+
+        if (hasCollision)
         {
-            var offset = rayOriginOffset + new Vector3(i, 0, 0);
-            // 计算射线的起始位置
-            Vector3 rayOrigin = transform.parent.position + transform.TransformDirection(offset);
-
-            // 计算射线的方向（物体的前方）
-            Vector3 rayDirection = transform.forward;
-
-            // 存储碰撞信息
-            RaycastHit hitInfo;
-
-            int layermask = LayerMask.GetMask("Vehicles");
-            // 发射射线
-            hasCollision = Physics.Raycast(rayOrigin, rayDirection, out hitInfo, detectionRange, layermask);
-
-            // 在Scene视图中绘制射线，用于调试
-            Debug.DrawRay(rayOrigin, rayDirection * detectionRange, rayColor);
-
-            if (hasCollision)
-            {
-                Debug.Log("检测到碰撞，碰撞物体: " + hitInfo.collider.gameObject.name);
-                break;
-            }
+            Debug.Log("检测到碰撞，碰撞物体: " + hitInfo.collider.gameObject.name);
         }
 
         // 根据检测结果控制mesh的显示和隐藏

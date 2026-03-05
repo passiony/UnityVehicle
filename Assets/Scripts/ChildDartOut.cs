@@ -11,7 +11,7 @@ public class ChildDartOut : MonoBehaviour
     [SerializeField]
     private bool isRunning = false;
 
-    [Header("设置")]
+    [Header("设置")] public bool fixSpeed;
     public float runSpeed = 5.0f;     // 小孩跑动速度 (m/s)
     public float MaxSpeed = 6.0f;     // 小孩跑动速度 (m/s)
     public float MinSpeed = 4.0f;     // 小孩跑动速度 (m/s)
@@ -26,7 +26,10 @@ public class ChildDartOut : MonoBehaviour
 
     private void OnEnable()
     {
-        runSpeed = Random.Range(MinSpeed, MaxSpeed);
+        if (!fixSpeed)
+        {
+            runSpeed = Random.Range(MinSpeed, MaxSpeed);
+        }
     }
 
     void FixedUpdate()

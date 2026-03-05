@@ -50,11 +50,12 @@ public class G29Input : MonoBehaviour
     {
         // 6. 应用输入到车辆物理系统
         playerCar.SetSteering(_steerVal);
-        if (_brakeVal < 0)
+        if (_brakeVal < -0.1)
         {
-            playerCar.SetMortor((_brakeVal - 1) * 0.5f);
+            // playerCar.SetMortor((_brakeVal - 1) * 0.5f);
+            playerCar.SetMortor(0);
         }
-        else
+        else if (_throttleVal < -0.1)
         {
             playerCar.SetMortor((1 - _throttleVal) * 0.5f);
         }
